@@ -15,22 +15,27 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft } from "lucide-react";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.email(),
+  password: z.string().min(4).max(10),
 });
 
 export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
+  const [password, setPassword] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     setEmail(values.email);
+    setPassword(values.password);
     handleNextStep();
   }
 
@@ -39,7 +44,7 @@ export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
     <div className=" max-w-2xl  ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <ChevronLeft type="prevSubmit" className="w-5 h-5 border mb-4" />
+          <ChevronLeft type="prevSubmit" className="w-5 h-5 border mb-4 " />
           <FormField
             control={form.control}
             name="email"
@@ -59,13 +64,18 @@ export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
                   />
                 </FormControl>
                 <FormControl>
-                  <Input {...field} placeholder="Password" className="mt-5" />
+                  <Input
+                    {...field}
+                    placeholder="Password"
+                    className="mt-5"
+                    type="password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormDescription className="underline text-[14px] mt-3">
+          <FormDescription className="underline text-[14px] mt-3 text-black">
             Forgot password ?
           </FormDescription>
           <Button type="submit" className="bg-gray-300 w-full mt-5">

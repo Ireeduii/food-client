@@ -75,9 +75,6 @@ export const SignUpPassword = () => {
                       type={isPassword}
                       className="mt-4"
                     />
-                    <FormDescription className="underline text-[14px]">
-                      Forgot password ?
-                    </FormDescription>
                   </div>
                 </FormControl>
 
