@@ -23,7 +23,7 @@ export default function Home() {
           handleNextStep={handleNextStep}
         />
       </div>
-      <div className=" p-10 w-[900px]">
+      <div className=" mt-15 mr-5 w-[850px]">
         <img className="rounded-md " src="first.png" />
       </div>
     </main>

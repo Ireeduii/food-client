@@ -14,17 +14,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeClosed } from "lucide-react";
+import { ChevronLeft, Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 
 const formSchema = z.object({
-  password: z.string().min(6, "6 aas deesh bichde").max(10),
+  password: z.string().min(6).max(10),
   confirmPassword: z.string().min(6).max(10),
 });
 
 export const SignUpPassword = () => {
   const [isPassword, setIsPassword] = useState("password");
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +43,10 @@ export const SignUpPassword = () => {
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    console.log("values", values);
+  }
+  function stepBeforePage() {
+    //
   }
 
   return (
@@ -56,11 +58,14 @@ export const SignUpPassword = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xl">
-                  Create a strong password
-                </FormLabel>
+                <ChevronLeft
+                  onClick={stepBeforePage}
+                  className="w-5 h-5 border mb-4"
+                />
+                <FormLabel className="text-xl">Create new password</FormLabel>
                 <FormDescription>
-                  Create a strong password with letters, numbers.
+                  Set a new password with a combination of letters and numbers
+                  for better security.
                 </FormDescription>
                 <FormControl>
                   <div>
@@ -68,12 +73,11 @@ export const SignUpPassword = () => {
                       placeholder="Password"
                       {...field}
                       type={isPassword}
+                      className="mt-4"
                     />
-                    {isPassword === "password" ? (
-                      <Eye onClick={togglePassword} />
-                    ) : (
-                      <EyeClosed onClick={togglePassword} />
-                    )}
+                    <FormDescription className="underline text-[14px]">
+                      Forgot password ?
+                    </FormDescription>
                   </div>
                 </FormControl>
 
@@ -87,14 +91,28 @@ export const SignUpPassword = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <Input
+                    placeholder="Confirm"
+                    type={isPassword}
+                    className="mt-4"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full bg-gray-400">
-            Let's go
+          <div className="flex gap-3 mt-2">
+            {isPassword === "password" ? (
+              <Eye onClick={togglePassword} />
+            ) : (
+              <EyeClosed onClick={togglePassword} />
+            )}
+            <FormDescription>Show Password</FormDescription>
+          </div>
+
+          <Button type="submit" className="w-full bg-gray-400 mt-5">
+            Create password
           </Button>
         </form>
       </Form>
