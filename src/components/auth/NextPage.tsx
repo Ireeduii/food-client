@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import { file, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -18,10 +18,9 @@ import { ChevronLeft } from "lucide-react";
 
 const formSchema = z.object({
   email: z.email(),
-  // password: z.string().min(6).max(10),
 });
 
-export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
+export const NextPage = ({ email, setEmail, handleNextStep }: any) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,13 +29,12 @@ export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values);
     setEmail(values.email);
     handleNextStep();
   }
 
   return (
-    <div className=" max-w-2xl  ">
+    <div className=" max-w-2xl -mt-6 ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <ChevronLeft type="prevSubmit" className="w-5 h-5 border mb-4 " />
@@ -46,10 +44,10 @@ export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-semibold text-xl mt-2">
-                  Create a strong password
+                  Log in
                 </FormLabel>
                 <FormDescription className="w-full">
-                  Create a strong password with letters, numbers.
+                  Log in to enjoy your favorite dishes.
                 </FormDescription>
                 <FormControl>
                   <Input
@@ -60,20 +58,26 @@ export const SignUpEmail = ({ email, setEmail, handleNextStep }: any) => {
                   />
                 </FormControl>
 
+                <FormControl>
+                  <Input {...field} placeholder="Password" className="mt-5" />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
+          <FormDescription className="underline text-[14px] mt-3 text-gray-600">
+            Forgot password ?
+          </FormDescription>
           <Button type="submit" className="bg-gray-300 w-full mt-5">
             Let's go
           </Button>
           <FormLabel className="mt-5 flex justify-evenly text-gray-500">
-            Already have an account?
-            <button className="text-blue-400">Log in</button>
+            Don’t have an account?
+            <a className="text-blue-400">Sign up</a>
           </FormLabel>
         </form>
       </Form>
     </div>
   );
 };
+// Iree123@

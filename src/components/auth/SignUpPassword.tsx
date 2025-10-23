@@ -22,7 +22,11 @@ const formSchema = z.object({
   confirmPassword: z.string().min(6).max(10),
 });
 
-export const SignUpPassword = () => {
+export const SignUpPassword = ({
+  handleNextStep,
+  password,
+  confirmPassword,
+}: any) => {
   const [isPassword, setIsPassword] = useState("password");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,11 +47,13 @@ export const SignUpPassword = () => {
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("values", values);
+    setIsPassword(values.confirmPassword);
+    handleNextStep();
   }
-  function stepBeforePage() {
-    //
-  }
+
+  // function stepBeforePage() {
+  //   //
+  // }
 
   return (
     <div className="border rounded-xl max-w-2xl border-none">
@@ -59,7 +65,7 @@ export const SignUpPassword = () => {
             render={({ field }) => (
               <FormItem>
                 <ChevronLeft
-                  onClick={stepBeforePage}
+                  // onClick={stepBeforePage}
                   className="w-5 h-5 border mb-4"
                 />
                 <FormLabel className="text-xl">Create new password</FormLabel>
